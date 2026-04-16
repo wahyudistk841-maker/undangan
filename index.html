@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
+    background:#111;
+    color:white;
+}
+
+.cover {
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background: url('https://images.unsplash.com/photo-1522673607200-164d1b6ce486') center/cover;
+}
+
+.cover h1 {
+    font-family:'Playfair Display';
+    font-size:40px;
+}
+
+.btn {
+    padding:12px 25px;
+    background:gold;
+    color:black;
+    border:none;
+    margin-top:20px;
+    cursor:pointer;
+}
+
+.section {
+    padding:50px 20px;
+}
+
+.countdown {
+    font-size:20px;
+    margin-top:20px;
+}
+
+input, textarea {
+    width:90%;
+    padding:10px;
+    margin:5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <h1>Salwa dan yudi</h1>
+    <p>Kepada Yth: <span id="guest"></span></p>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" style="display:none;">
+
+<div class="section">
+    <h2>Wahyudi & Salwa</h2>
+    <p>Akan menikah pada:</p>
+    <p>03 Mei 2026</p>
+
+    <div class="countdown" id="countdown"></div>
+</div>
+
+<div class="section">
+    <h2>Lokasi</h2>
+    <p>Kediaman mempelai wanita</p>
+    <a href="https://maps.google.com" target="_blank">Buka Maps</a>
+</div>
+
+<div class="section">
+    <h2>RSVP</h2>
+    <input type="text" placeholder="Nama">
+    <textarea placeholder="Ucapan"></textarea>
+    <br>
+    <button class="btn">Kirim</button>
+</div>
+
+</div>
+
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
+
+<script>
+// ambil nama tamu dari URL
+const urlParams = new URLSearchParams(window.location.search);
+const guest = urlParams.get('to');
+document.getElementById('guest').innerText = guest || 'Tamu Undangan';
+
+// buka undangan
+function openInvite(){
+    document.querySelector('.cover').style.display='none';
+    document.getElementById('content').style.display='block';
+}
+
+// countdown
+const targetDate = new Date("Dec 20, 2026 00:00:00").getTime();
+
+setInterval(()=>{
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+
+    document.getElementById("countdown").innerHTML =
+        d+" Hari "+h+" Jam lagi";
+},1000);
+</script>
+
+</body>
+</html>
